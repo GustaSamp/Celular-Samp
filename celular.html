@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Celular Simulado</title>
+  <style>
+    /* Estilos gerais */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #222;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Estrutura do celular */
+    .cellphone {
+      width: 380px;
+      height: 780px;
+      border-radius: 40px 40px 30px 30px;
+      background-color: #000;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+    .screen {
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.pexels.com/photos/5838466/pexels-photo-5838466.jpeg');
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    /* Estilos da câmera e borda superior */
+    .camera {
+      width: 60px;
+      height: 8px;
+      border-radius: 4px;
+      background-color: #333;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Tela de bloqueio e desbloqueio */
+    .lock-screen, .home-screen, .app-screen {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+    }
+    .lock-screen {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .unlock-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ícones dos aplicativos */
+    .app-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px 0;
+    }
+    .icon-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+    }
+    .icon {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      margin-bottom: 5px;
+      transition: background 0.3s;
+    }
+    .icon:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+    .icon img {
+      width: 35px;
+      height: 35px;
+    }
+    .app-label {
+      font-size: 13px;
+      color: white;
+    }
+
+    /* Tela de conteúdo dos aplicativos */
+    .app-screen {
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .app-screen h2 {
+      margin-bottom: 20px;
+    }
+    .back-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cellphone">
+    <div class="screen">
+      <!-- Câmera no topo -->
+      <div class="camera"></div>
+      
+      <!-- Tela de bloqueio -->
+      <div class="lock-screen" id="lockScreen">
+        <h2>Pressione para desbloquear</h2>
+        <button class="unlock-button" onclick="unlockScreen()">Desbloquear</button>
+      </div>
+
+      <!-- Tela inicial -->
+      <div class="home-screen" id="homeScreen" style="display: none;">
+        <div class="app-icons">
+          <div class="icon-container" onclick="openApp('calculator')">
+            <div class="icon">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/calculator.png" alt="Calculadora">
+            </div>
+            <div class="app-label">Calculadora</div>
+          </div>
+          <div class="icon-container" onclick="openApp('gps')">
+            <div class="icon">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/worldwide-location.png" alt="GPS">
+            </div>
+            <div class="app-label">GPS</div>
+          </div>
+          <div class="icon-container" onclick="openApp('whatsapp')">
+            <div class="icon">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" alt="WhatsApp">
+            </div>
+            <div class="app-label">WhatsApp</div>
+          </div>
+          <div class="icon-container" onclick="openApp('spotify')">
+            <div class="icon">
+              <img src="https://img.icons8.com/ios-filled/50/ffffff/spotify.png" alt="Spotify">
+            </div>
+            <div class="app-label">Spotify</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conteúdo dos aplicativos -->
+      <div class="app-screen" id="calculator">
+        <h2>Calculadora</h2>
+        <p>Simulação da calculadora.</p>
+        <button class="back-button" onclick="closeApp()">Voltar</button>
+      </div>
+      <div class="app-screen" id="gps">
+        <h2>GPS</h2>
+        <p>Simulação do GPS.</p>
+        <button class="back-button" onclick="closeApp()">Voltar</button>
+      </div>
+      <div class="app-screen" id="whatsapp">
+        <h2>WhatsApp</h2>
+        <p>Simulação do WhatsApp.</p>
+        <button class="back-button" onclick="closeApp()">Voltar</button>
+      </div>
+      <div class="app-screen" id="spotify">
+        <h2>Spotify</h2>
+        <p>Simulação do Spotify.</p>
+        <button class="back-button" onclick="closeApp()">Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function unlockScreen() {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("homeScreen").style.display = "flex";
+    }
+
+    function openApp(appId) {
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById(appId).style.display = "flex";
+    }
+
+    function closeApp() {
+      const appScreens = document.querySelectorAll(".app-screen");
+      appScreens.forEach(screen => screen.style.display = "none");
+      document.getElementById("homeScreen").style.display = "flex";
+    }
+  </script>
+</body>
+</html>
